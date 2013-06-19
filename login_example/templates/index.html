@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% from '_macros.html' import with_errors %}
+{% block title %}Main Page{% endblock %}
+{% block content %}
+<p>
+{% if current_user.is_anonymous() %}
+<form class=form-horizontal action="{{ url_for('login', next=request.args.get('next')) }}" method=post>
+  {{ form.hidden_tag() }}
+  {{ with_errors(form.username, placeholder='Username') }}
+  {{ with_errors(form.password, placeholder='Password') }}
+  <div class=control-group>
+    <div class=controls>
+      <label class=checkbox>
+        <input type=checkbox name=remember> Remember me
+      </label>
+      <button type=submit class="btn btn-primary">Login</button>
+    </div>
+  </div>
+</form>
+{% else %}
+{% for zone in zonelist %}
+    <a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="btn btn-warning btn-large btn-block">{{ zone.zonename }}</a>
+{% endfor %}
+{% endif %}
+</p>
+{% endblock %}
