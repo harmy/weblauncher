@@ -1,26 +1,99 @@
 {% extends 'base.html' %}
-{% from '_macros.html' import with_errors %}
-{% block title %}Main Page{% endblock %}
+{% block title %}登录游戏{% endblock %}
 {% block content %}
-<p>
 {% if current_user.is_anonymous() %}
-<form class=form-horizontal action="{{ url_for('login', next=request.args.get('next')) }}" method=post>
-  {{ form.hidden_tag() }}
-  {{ with_errors(form.username, placeholder='Username') }}
-  {{ with_errors(form.password, placeholder='Password') }}
-  <div class=control-group>
-    <div class=controls>
-      <label class=checkbox>
-        <input type=checkbox name=remember> Remember me
-      </label>
-      <button type=submit class="btn btn-primary">Login</button>
+<div id="login-page">
+    <div id="login-form">
+        <form action="{{ url_for('login', next=request.args.get('next')) }}" method=post>
+          {{ form.hidden_tag() }}
+            <table>
+                <tr>
+                    <th>账号：</th>
+                    <td>{{ form.username() }}</td>
+                </tr>
+                <tr>
+                    <th>密码：</th>
+                    <td>{{ form.password() }}</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>
+                        <input id="remember" name="remember" type="checkbox"> 记住账号
+                    </td>
+                </tr>
+            </table>
+            <input type=submit id="login-btn" value="">
+        </form>
     </div>
-  </div>
-</form>
+</div>
 {% else %}
 {% for zone in zonelist %}
-    <a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="btn btn-warning btn-large btn-block">{{ zone.zonename }}</a>
+<div id="zonelist-page">
+    <div id="zonelist-top">
+        <div class=navbar-inner>
+              <span class=brand>Ascq Login example</span>
+                  <ul class=nav>
+                    {% for endpoint in [
+                      'index',
+                      'login' if current_user.is_anonymous() else 'logout',
+                    ] %}
+                        <li {% if endpoint == request.endpoint %}class=active{% endif %}>
+                          <a href="{{ url_for(endpoint) }}">{{ endpoint.capitalize() }}</a>
+                        </li>
+                    {% endfor %}
+                  </ul>
+        </div>
+    </div>
+    <div id="zonelist-wapper">
+        <div class="zonelist">
+            <ul>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">180区龙之逆袭</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">180区龙之逆袭</a></li>
+            </ul>
+        </div>
+        <div class="zonelist">
+            <ul>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endfor %}
+<script src="{{ url_for('static', filename='js/jquery.bxslider.min.js') }}"></script>
+<script type="text/javascript">
+$(function(){
+  $('#zonelist-wapper').bxSlider({
+      infiniteLoop: false,
+      hideControlOnEnd: true,
+      mode: 'vertical',
+      pager: false
+  });
+});
+</script>
 {% endif %}
-</p>
 {% endblock %}

@@ -46,7 +46,7 @@ def login():
                 flash('This username is disabled!', 'error')
         else:
             flash('Wrong username or password!', 'error')
-    return render_template('login.html', form=form)
+    return render_template('index.html', form=form)
 
 
 @app.route('/logout')
@@ -58,7 +58,7 @@ def logout():
 @app.route('/play/<int:zoneid>')
 @login_required
 def play(zoneid):
-    r = requests.get('http://192.168.0.100/api/7c1e2648-cf39-11e2-a5db-080027880ca6/auth?username={0}&zoneid={1}'.format(current_user.username, zoneid))
+    r = requests.get('http://192.168.0.100/api/7c1e2648-cf39-11e2-a5db-080027880ca6/authorize?username={0}&zoneid={1}'.format(current_user.username, zoneid))
     gateinfo = r.json() if r.status_code == requests.codes.ok else None
     if gateinfo is None:
         return redirect(url_for('playerror', message=r.json()))

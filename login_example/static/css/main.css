@@ -1,0 +1,150 @@
+/* Document styles */
+body {
+	font: 12px '宋体', sans-serif;
+    color: rgb(255, 204, 102);
+}
+
+.text-error {
+    color:#b94a48;
+}
+
+.container {
+    width: 443px;
+	height: 271px;
+	margin: 0 auto 0;
+    overflow: hidden;
+	position: relative;
+    background: url("../img/bg.jpg") no-repeat transparent;
+}
+
+.container #login-page {
+    width: inherit;
+    height: 210px;
+    background: url("../img/login-bg.png") no-repeat transparent;
+}
+
+.container #zonelist-page {
+    width: inherit;
+    height: 210px;
+    background: url("../img/zonelist-bg.png") no-repeat transparent;
+}
+
+#footer {
+    padding: 6px 18px;
+    height: 60px;
+}
+
+ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+li{
+    list-style-type: none;
+    display: inline;
+}
+
+#login-form {
+    padding: 48px 0px 0px 54px;
+    width: 180px;
+}
+
+#login-form input[type="text"],input[type="password"] {
+    width: 96px;
+    border-style: none;
+}
+
+#login-form input[type="checkbox"] {
+    margin-top: 4px;
+    cursor: pointer;
+    border-style: none;
+}
+
+#login-btn {
+    background: url("../img/login-btn.png") no-repeat;
+    margin-top: 14px;
+    border: none medium;
+    display: block;
+    cursor: pointer;
+    width: 154px;
+    height: 44px;
+}
+
+#login-btn:hover {
+    background-position: left bottom;
+}
+
+#login-form table {
+    border-collapse:separate;
+    border-spacing:0 4px;
+}
+
+a.red-btn {
+    background: url("../img/red-btn.png") no-repeat;
+    width: 96px;
+    height: 36px;
+    line-height:36px;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.2em;
+    color: rgb(255, 225, 144);
+}
+
+a:hover.red-btn {
+    background-position: left bottom;
+}
+
+.zonelist {
+    padding-top: 0px;
+    margin-left: 8px;
+    /*border: 1px solid #ff0000;*/
+    line-height: 25px;
+}
+
+a.zone-btn {
+    background: url("../img/zone-btn.png") no-repeat;
+    width: 98px;
+    height: 21px;
+    line-height:21px;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    color: rgb(255, 225, 144);
+}
+
+a:hover.zone-btn {
+    background-position: left bottom;
+    text-decoration: underline;
+}
+
+.bx-prev {
+	position: absolute;
+	top: 84px;
+	right: 4px;
+	width: 18px;
+	height: 18px;
+	text-indent: -999999px;
+	background: url(../img/icon_arrow_up.png) no-repeat 0 0;
+}
+
+.bx-next {
+	position: absolute;
+	top: 163px;
+	right: 4px;
+	width: 18px;
+	height: 18px;
+	text-indent: -999999px;
+	background: url(../img/icon_arrow_down.png) no-repeat 0 0;
+}
+
+.bx-next:hover, .bx-prev:hover {
+	background-position: left bottom;
+}
+
+#zonelist-top {
+    height: 84px;
+}
+
