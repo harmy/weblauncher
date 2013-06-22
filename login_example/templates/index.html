@@ -73,6 +73,15 @@ $(function(){
             欢迎回来，{{ current_user.username }} [<a href="{{ url_for('logout') }}">退出</a>]
             {% endif %}
         </div>
+        <div id="server-error-message" class="text-error text-shadow">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+          {% if messages %}
+            {% for _, message in messages %}
+              {{ message }}
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        </div>
         <div id="last-played">
         </div>
         <div id="quick-play">
@@ -113,6 +122,8 @@ $(function(){
     if ($.cookie('last-played-url') && $.cookie('last-played-name')) {
         $('#last-played').html('<a href="' + $.cookie('last-played-url') + '" class="zone-btn">' + $.cookie('last-played-name') + '</a>');
     }
+
+    $('#zoneid').focus();
 });
 </script>
 {% endif %}

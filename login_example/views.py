@@ -68,16 +68,11 @@ def play():
     r = requests.get('http://192.168.0.100/api/7c1e2648-cf39-11e2-a5db-080027880ca6/authorize?username={0}&zoneid={1}'.format(current_user.username, zoneid))
     gateinfo = r.json() if r.status_code == requests.codes.ok else None
     if gateinfo is None:
-        return redirect(url_for('playerror', message=r.json()))
+        flash(u'无法登录游戏，服务器返回错误信息：{0}'.format(r.json()['message']))
+        return redirect(url_for('index'))
     return redirect(url_for('playok', **gateinfo))
 
 @app.route('/play/ok')
 @login_required
 def playok():
     return '{0}'.format(request.args.get('token'))
-
-@app.route('/play/error')
-@login_required
-def playerror():
-    err_message = request.args.get('message')
-    return 'error:{0}'.format(err_message)
