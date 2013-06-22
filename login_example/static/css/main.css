@@ -4,6 +4,16 @@ body {
     color: rgb(255, 204, 102);
 }
 
+a {
+    color: rgb(255, 225, 144);
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ff0000;
+    text-decoration: underline;
+}
+
 .text-error {
     color:#b94a48;
 }
@@ -44,17 +54,17 @@ li{
     display: inline;
 }
 
-#login-form {
+#login-wrapper {
     padding: 48px 0px 0px 54px;
     width: 180px;
 }
 
-#login-form input[type="text"],input[type="password"] {
+#login-wrapper input[type="text"],input[type="password"] {
     width: 96px;
     border-style: none;
 }
 
-#login-form input[type="checkbox"] {
+#login-wrapper input[type="checkbox"] {
     margin-top: 4px;
     cursor: pointer;
     border-style: none;
@@ -62,7 +72,7 @@ li{
 
 #login-btn {
     background: url("../img/login-btn.png") no-repeat;
-    margin-top: 14px;
+    margin-top: 8px;
     border: none medium;
     display: block;
     cursor: pointer;
@@ -148,3 +158,45 @@ a:hover.zone-btn {
     height: 84px;
 }
 
+#last-played {
+    padding-top: 44px;
+    padding-left: 8px;
+}
+
+#welcome {
+    float: right;
+    background-color: #000000;
+    padding: 3px;
+}
+
+.text-shadow {
+    display:inline-block;
+    -webkit-text-shadow:#000 1px 0 0,#000 0 1px 0,#000 -1px 0 0,#000 0 -1px 0;
+    -moz-text-shadow:#000 1px 0 0,#000 0 1px 0,#000 -1px 0 0,#000 0 -1px 0;
+    text-shadow:#000 1px 0 0,#000 0 1px 0,#000 -1px 0 0,#000 0 -1px 0;
+    *filter: Glow(Color=#000000, Strength=1);
+}
+
+#quick-play {
+    float: right;
+    position: absolute;
+    right: 0px;
+    top: 52px;
+    color: rgb(255, 153, 0);
+}
+
+#quick-play input[type="text"] {
+    border: solid 1px rgb(204, 204, 153);
+    width: 36px;
+    background-color: rgb(143, 122, 88);
+    color: rgb(255, 225, 144);
+}
+
+
+#quick-play input[type="submit"] {
+    border: solid 1px rgb(204, 0, 0);
+    width: 60px;
+    height: 18px;
+    background-color: rgb(102, 0, 0);
+    color: rgb(255, 153, 0);
+}

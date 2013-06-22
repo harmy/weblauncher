@@ -3,96 +3,116 @@
 {% block content %}
 {% if current_user.is_anonymous() %}
 <div id="login-page">
-    <div id="login-form">
-        <form action="{{ url_for('login', next=request.args.get('next')) }}" method=post>
+    <div id="login-wrapper">
+        <form id="login-form" action="{{ url_for('login', next=request.args.get('next')) }}" method=post>
           {{ form.hidden_tag() }}
             <table>
                 <tr>
-                    <th>账号：</th>
-                    <td>{{ form.username() }}</td>
+                    <th><span class="text-shadow">账号：</span></th>
+                    <td>{{ form.username() }}
+                    </td>
                 </tr>
                 <tr>
-                    <th>密码：</th>
-                    <td>{{ form.password() }}</td>
+                    <th><span class="text-shadow">密码：</span></th>
+                    <td>{{ form.password() }}
+                    </td>
                 </tr>
                 <tr>
                     <th></th>
                     <td>
-                        <input id="remember" name="remember" type="checkbox"> 记住账号
+                        <label>
+                            <input id="remember" name="remember" type="checkbox"><span class="text-shadow">记住账号</span>
+                        </label>
                     </td>
                 </tr>
             </table>
+            <div id="error-message" class="text-error text-shadow">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+              {% if messages %}
+                {% for _, message in messages %}
+                  {{ message }}
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            </div>
             <input type=submit id="login-btn" value="">
         </form>
     </div>
 </div>
+<script type="text/javascript">
+$(function(){
+    $('#login-form').submit(function() {
+        if($('#username').val() == '' || $('#password').val() == ''){
+            $('#error-message').text('账号和密码不能为空！');
+            return false;
+        }
+    });
+
+    $('#remember').click(function() {
+        if ($(this).prop('checked')) {
+            $.cookie('username', $('#username').val(), {'expires' : 30});
+        } else {
+            $.removeCookie('username');
+        }
+    });
+
+    if ($.cookie('username')) {
+        $('#username').val($.cookie('username'));
+        $('#password').focus();
+        $('#remember').prop('checked', true);
+    } else {
+        $('#username').focus();
+    }
+});
+</script>
 {% else %}
-{% for zone in zonelist %}
 <div id="zonelist-page">
     <div id="zonelist-top">
-        <div class=navbar-inner>
-              <span class=brand>Ascq Login example</span>
-                  <ul class=nav>
-                    {% for endpoint in [
-                      'index',
-                      'login' if current_user.is_anonymous() else 'logout',
-                    ] %}
-                        <li {% if endpoint == request.endpoint %}class=active{% endif %}>
-                          <a href="{{ url_for(endpoint) }}">{{ endpoint.capitalize() }}</a>
-                        </li>
-                    {% endfor %}
-                  </ul>
+        <div id="welcome">
+            {% if not current_user.is_anonymous() %}
+            欢迎回来，{{ current_user.username }} [<a href="{{ url_for('logout') }}">退出</a>]
+            {% endif %}
+        </div>
+        <div id="last-played">
+        </div>
+        <div id="quick-play">
+            <form action="{{ url_for('play') }}" method=get>
+                <span class="text-shadow">输入区号:</span>
+                <input type="text" name="zoneid" id="zoneid" value="{{ latest_zoneid }}">
+                <input type="submit" id="entergame" value="直接进入">
+            </form>
         </div>
     </div>
     <div id="zonelist-wapper">
+        {% for chunk in zonechunks %}
         <div class="zonelist">
             <ul>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">180区龙之逆袭</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">180区龙之逆袭</a></li>
+                {% for zone in chunk %}
+                <li><a href="{{ url_for('play', zoneid=zone.zoneid) }}" class="zone-btn">{{ zone.zonename }}</a></li>
+                {% endfor %}
             </ul>
         </div>
-        <div class="zonelist">
-            <ul>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-                <li><a href="http://192.168.0.100/play/{{ zone.zoneid }}" class="zone-btn">{{ zone.zonename }}</a></li>
-            </ul>
-        </div>
+        {% endfor %}
     </div>
 </div>
-{% endfor %}
 <script src="{{ url_for('static', filename='js/jquery.bxslider.min.js') }}"></script>
 <script type="text/javascript">
 $(function(){
-  $('#zonelist-wapper').bxSlider({
+    $('#zonelist-wapper').bxSlider({
       infiniteLoop: false,
       hideControlOnEnd: true,
       mode: 'vertical',
       pager: false
-  });
+    });
+
+    $('.zone-btn').click(function() {
+        $.cookie('last-played-url', $(this).attr('href'), {'expires' : 30});
+        $.cookie('last-played-name', $(this).text(), {'expires' : 30});
+    });
+
+    if ($.cookie('last-played-url') && $.cookie('last-played-name')) {
+        $('#last-played').html('<a href="' + $.cookie('last-played-url') + '" class="zone-btn">' + $.cookie('last-played-name') + '</a>');
+    }
 });
 </script>
 {% endif %}
